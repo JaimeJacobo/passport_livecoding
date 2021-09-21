@@ -1,0 +1,50 @@
+
+0. If you don't have a package.json:
+  $ npm init -y
+
+1. Install the default packages for your server:
+
+  - express
+  - mongoose
+  - dotenv
+
+2. Install the following dependencies (needed for the authentification process):
+
+  - bcrypt: for hashing password (if it does not work, use bcryptjs instead)
+  - connect-flash: for managing errors with the Login with passport
+  - express-session: for creating sessions (space in memory) to keep the information of the user even though the pages reloads or she/he goes to a different route
+  - passport: authentification middleware for express
+  - passport-local: passport strategy for authenticating with username and password
+
+
+3. (app.js) Import the packages we just installed
+
+4. (app.js) Set up the server with express
+
+5. (app.js) Add the middleware for req.body
+
+6. (app.js) Connect your app to Mongo Atlas through Mongoose
+
+7. (/.env) Create the .env file and create the variables from Mongo Atlas (username, password and the database name). Remember to include them on the mongoose connection link. Also you should add the .env file to the .gitignore file.
+
+8. (app.js) Configure the middleware for the session
+
+9. (app.js) Configure the serialization of the user
+
+10. (app.js) Configure the deserialization of the user
+
+11. (app.js) Configure the middleware for flash
+
+12. (app.js) Configure the middleware for the Strategy
+
+13. (/models) Create a models folder. Create a "User.model.js" file with the schema of the user inside
+
+14. (app.js) Import the User model in app.js
+
+15. (app.js) Configure passport middleware
+
+16. (/routes) Create routes folder. Inside, create auth.routes.js
+
+17. (app.js) Connect the router to app.js
+
+18. (auth.routes.js) Import router, passport, bcrypt and the User model. Export the router 
