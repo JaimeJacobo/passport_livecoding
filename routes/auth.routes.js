@@ -7,13 +7,31 @@ const User = require('../models/User.model')
 
 // Create middleware for checking if the user is logged in
 
-// ****** Route for checking if the user is logged in
-router.get('/verify', (req, res)=>{
-  if(req.isAuthenticated()){
-     res.send(req.user)
-  } else {
-    res.send({})
+const middleware = {
+  checkForAuth: (req, res, next)=>{
+    if(req.isAuthenticated()){
+      return next()
+    } else {
+     res.send('You did not pass the middleware')
+   }
+  },
+  checkForAaron: (req, res, next)=>{
+    if(req.user.username === 'Aaron'){
+      return next()
+    } else {
+      res.send('You can only access here if you are Aaron')
+    }
   }
+}
+
+router.get('/aaron', middleware.checkForAaron, (req, res)=>{
+  res.send('WELCOME AARON !!!!!!!!')
+})
+
+
+// ****** Route for checking if the user is logged in
+router.get('/verify', middleware.checkForAuth, (req, res)=>{
+  res.send(req.user)
 })
 
 // Route for sending the errors to the client
