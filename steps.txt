@@ -48,3 +48,52 @@
 17. (app.js) Connect the router to app.js
 
 18. (auth.routes.js) Import router, passport, bcrypt and the User model. Export the router 
+
+
+
+
+STEPS FOR MERGIN OUR FRONTEND WITH OUR BACKEND (MANUALLY)
+
+1. Create a client folder inside the backend. This folder is going to contain all of our Frontend
+  $ npx create-react-app client
+
+2. Inside the client folder, run $ npm run build . This will creata a build folder with our app compressed in JS, CSS and HTML ready to be deployed.
+
+3. Move the build folder from the client folder to the root folder (the backend)
+
+4. Run $ npm install path (In the backend)
+
+5. At the top of your app (just after const app = express()), add this middleware:
+
+  - app.use(express.static(path.join(__dirname, "build")));
+
+6. At the bottom of your app (just before the app.listen() and **IMPORTANT** AFTER your backend routes ), add this middleware:
+
+ - app.use((req, res) => res.sendFile(path.join(__dirname, "build", "index.html")));
+
+7. Run node app.js and you will be able to see your Frontend
+
+
+
+STEPS FOR MERGING OUR FRONTEND WITH OUR BACKEND (AUTOMATICALLY)
+
+1. Create a client folder inside the backend. This folder is going to contain all of our Frontend
+  $ npx create-react-app client
+
+2. Run $ npm install path (in the backend)
+
+3. At the top of your app (just after const app = express()), add this middleware:
+
+  - app.use(express.static(path.join(__dirname, "build")));
+
+4. At the bottom of your app (just before the app.listen() and **IMPORTANT** AFTER your backend routes ), add this middleware:
+
+ - app.use((req, res) => res.sendFile(path.join(__dirname, "build", "index.html")));
+
+5. Go to package.json inside the client, and in the scripts add this line:
+
+     "postbuild": "rm -rf ../build && mv build ../"
+  
+  This is going to, after the build is done, delete the previous build folder we had in the backend and move the new build folder into the backend.
+
+6. Inside the client, run npm run build every time you make a change in the frontend. You will see the changes in the backend automatically.

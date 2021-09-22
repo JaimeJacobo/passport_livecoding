@@ -10,12 +10,16 @@ const session = require('express-session')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const path = require('path')
 
 //14. Import the User model
 const User = require('./models/User.model')
 
 //4. Set up the server with express
 const app = express()
+
+//Middleware for the build folder
+app.use(express.static(path.join(__dirname, "build")));
 
 //5. Add the middleware for req.body
 app.use(express.json())
@@ -92,6 +96,8 @@ app.use(passport.session())
 // 17. Connect the router to app.js
 app.use("/auth", require('./routes/auth.routes'))
 
+// Middleware for build folder
+app.use((req, res) => res.sendFile(path.join(__dirname, "build", "index.html")));
 
 app.listen(port, ()=>{
   console.log(`Connected in Port ${port}`)
